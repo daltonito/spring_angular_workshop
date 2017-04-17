@@ -1,0 +1,4 @@
+com/alcohol/controller/AlcoholConsumptionController.class
+com/alcohol/api/AlcoholConsumptionAPI.class
+com/alcohol/repository/AlcoholConsumptionRepository.class
+com/alcohol/model/AlcoholConsumption.class
