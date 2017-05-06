@@ -2,10 +2,13 @@
 
 <beans
         xmlns="http://www.springframework.org/schema/beans"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+        xmlns:tx="http://www.springframework.org/schema/tx"
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:mongo="http://www.springframework.org/schema/data/mongo"
         xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
         xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
@@ -13,58 +16,52 @@
 		http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
-        http://www.springframework.org/schema/data/mongo
-    	http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/data/jpa
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/jdbc
+        http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
 
     <mvc:annotation-driven />
+
+    <!-- Scans for components that will be auto-registered as Spring beans -->
     <context:annotation-config />
     <context:component-scan base-package="com.alcohol.api" />
-    <context:component-scan base-package="com.alcohol.controller" />
+    <context:component-scan base-package="com.alcohol.service.impl" />
     <context:component-scan base-package="com.alcohol.model" />
-    <context:component-scan base-package="com.alcohol.repository" />
 
-    <!-- Factory bean that creates the Mongo instance -->
-    <!--<bean id="mongo" class="org.springframework.data.mongodb.core.MongoFactoryBean">-->
-        <!--<property name="host" value="localhost" />-->
-    <!--</bean>-->
+    <!-- Scans for JPA repositories that will be auto-registered -->
+    <jpa:repositories base-package="com.alcohol.repository" />
 
-    <!-- MongoTemplate for connecting and quering the documents in the database -->
-    <!--<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">-->
-        <!--<constructor-arg name="mongo" ref="mongo" />-->
-        <!--<constructor-arg name="databaseName" value="test" />-->
-    <!--</bean>-->
-
-    <mongo:mongo host="localhost" />
-    <mongo:db-factory dbname="test" />
-
-    <bean id="mappingContext"
-          class="org.springframework.data.mongodb.core.mapping.MongoMappingContext" />
-
-    <bean id="defaultMongoTypeMapper"
-          class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper">
-        <constructor-arg name="typeKey"><null/></constructor-arg>
+    <!-- Datasource, that is currently hsqldb (in-memory database). -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+        <property name="url" value="jdbc:hsqldb:mem://alcoholDb" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
     </bean>
 
-    <bean id="mappingMongoConverter"
-          class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
-        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
-        <constructor-arg name="mappingContext" ref="mappingContext" />
-        <property name="typeMapper" ref="defaultMongoTypeMapper" />
+    <!-- EntityManagerFactory -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          p:packagesToScan="com.alcohol.model" p:dataSource-ref="dataSource">
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="generateDdl" value="true" />
+                <property name="showSql" value="true" />
+            </bean>
+        </property>
     </bean>
 
-    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
-        <constructor-arg name="mongoConverter" ref="mappingMongoConverter" />
+    <!-- Transactions -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
 
-    <mongo:repositories base-package="com.alcohol.repository" />
-
-    <bean id="viewResolver"
-          class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-        <property name="viewClass"
-                  value="org.springframework.web.servlet.view.JstlView" />
-        <property name="prefix" value="/WEB-INF/jsp/" />
-        <property name="suffix" value=".jsp" />
-    </bean>
+    <!-- Initialize the database with initial data from the database.sql -->
+    <jdbc:initialize-database data-source="dataSource">
+        <jdbc:script location="classpath:database.sql"/>
+    </jdbc:initialize-database>
 
 </beans>

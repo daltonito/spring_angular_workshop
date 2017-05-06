@@ -1,4 +1,6 @@
-com/alcohol/controller/AlcoholConsumptionController.class
-com/alcohol/api/AlcoholConsumptionAPI.class
+com/alcohol/exception/AlcoholConsumptionNotFound.class
 com/alcohol/repository/AlcoholConsumptionRepository.class
+com/alcohol/service/AlcoholConsumptionService.class
+com/alcohol/api/AlcoholConsumptionController.class
+com/alcohol/service/impl/AlcoholConsumptionServiceImpl.class
 com/alcohol/model/AlcoholConsumption.class
