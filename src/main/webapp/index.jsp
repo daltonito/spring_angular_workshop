@@ -1,12 +1,12 @@
 <html>
     <head>
-        <title>Alcohol Consumption Application by Aleksandar & Pedro</title>
+        <title>Alcohol Consumption Application</title>
     </head>
 <body>
 	<br>
 	<div style="text-align:center">
 		<h2>
-			Alcohol Consumption Application by Aleksandar & Pedro
+			Alcohol Consumption Application
 		</h2>
 	</div>
 </body>

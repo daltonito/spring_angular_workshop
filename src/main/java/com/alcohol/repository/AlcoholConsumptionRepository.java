@@ -1,11 +1,11 @@
 package com.alcohol.repository;
 
 import com.alcohol.model.AlcoholConsumption;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AlcoholConsumptionRepository extends MongoRepository<AlcoholConsumption, String> {
+public interface AlcoholConsumptionRepository extends JpaRepository<AlcoholConsumption, Long> {
 
-    public AlcoholConsumption findByCountry(String country);
+    AlcoholConsumption findByCountry(String country);
 }

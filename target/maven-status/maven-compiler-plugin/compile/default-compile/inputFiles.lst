@@ -1,4 +1,6 @@
+/Users/aleksandargjorgjevikj/Documents/SPRING MVC/AlcoholConsumptionApp/src/main/java/com/alcohol/api/AlcoholConsumptionController.java
 /Users/aleksandargjorgjevikj/Documents/SPRING MVC/AlcoholConsumptionApp/src/main/java/com/alcohol/model/AlcoholConsumption.java
 /Users/aleksandargjorgjevikj/Documents/SPRING MVC/AlcoholConsumptionApp/src/main/java/com/alcohol/repository/AlcoholConsumptionRepository.java
-/Users/aleksandargjorgjevikj/Documents/SPRING MVC/AlcoholConsumptionApp/src/main/java/com/alcohol/controller/AlcoholConsumptionController.java
-/Users/aleksandargjorgjevikj/Documents/SPRING MVC/AlcoholConsumptionApp/src/main/java/com/alcohol/api/AlcoholConsumptionAPI.java
+/Users/aleksandargjorgjevikj/Documents/SPRING MVC/AlcoholConsumptionApp/src/main/java/com/alcohol/exception/AlcoholConsumptionNotFound.java
+/Users/aleksandargjorgjevikj/Documents/SPRING MVC/AlcoholConsumptionApp/src/main/java/com/alcohol/service/AlcoholConsumptionService.java
+/Users/aleksandargjorgjevikj/Documents/SPRING MVC/AlcoholConsumptionApp/src/main/java/com/alcohol/service/impl/AlcoholConsumptionServiceImpl.java

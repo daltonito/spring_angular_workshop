@@ -1,47 +1,29 @@
 package com.alcohol.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
+import javax.persistence.*;
 
-import javax.validation.constraints.NotNull;
-
-@Document(collection = "alcohol_consumption")
+@Entity
+@Table(name = "alcohol_consumption")
 public class AlcoholConsumption {
 
-    @Id
-    private String id;
-
-    @NotEmpty
-    @Indexed(unique = true)
+    private Long id;
     private String country;
-
-    @NotNull
-    @Field("beer_servings")
     private Integer beerServings;
-
-    @NotNull
-    @Field("spirit_servings")
     private Integer spiritServings;
-
-    @NotNull
-    @Field("wine_servings")
     private Integer wineServings;
-
-    @Field("total_litres_of_pure_alcohol")
     private Double totalLiters;
 
-
-    public String getId() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    @Column(name = "country", unique = true)
     public String getCountry() {
         return country;
     }
@@ -50,6 +32,7 @@ public class AlcoholConsumption {
         this.country = country;
     }
 
+    @Column(name = "beer_servings", nullable = false)
     public Integer getBeerServings() {
         return beerServings;
     }
@@ -58,6 +41,7 @@ public class AlcoholConsumption {
         this.beerServings = beerServings;
     }
 
+    @Column(name = "spirit_servings", nullable = false)
     public Integer getSpiritServings() {
         return spiritServings;
     }
@@ -66,6 +50,7 @@ public class AlcoholConsumption {
         this.spiritServings = spiritServings;
     }
 
+    @Column(name = "wine_servings", nullable = false)
     public Integer getWineServings() {
         return wineServings;
     }
@@ -74,6 +59,7 @@ public class AlcoholConsumption {
         this.wineServings = wineServings;
     }
 
+    @Column(name = "total_litres_of_pure_alcohol")
     public Double getTotalLiters() {
         return totalLiters;
     }
