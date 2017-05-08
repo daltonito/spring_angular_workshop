@@ -23,7 +23,7 @@ public class AlcoholConsumption {
         this.id = id;
     }
 
-    @Column(name = "country", unique = true)
+    @Column(name = "country", unique = true, nullable = false)
     public String getCountry() {
         return country;
     }
